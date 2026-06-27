@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 
+import runRoutes from "./routes/run.routes";
+
 const app = express();
 
 app.use(cors());
@@ -12,5 +14,7 @@ app.get("/health", (_, res) => {
     message: "Server is running 🚀",
   });
 });
+
+app.use("/run", runRoutes);
 
 export default app;
