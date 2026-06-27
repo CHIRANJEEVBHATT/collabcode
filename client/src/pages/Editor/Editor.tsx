@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { socket } from "@/sockets/socket";
 import CodeEditor from "./CodeEditor";
 
 function Editor() {
   const { roomId } = useParams();
+  const navigate = useNavigate();
 
   const { state } = useLocation();
 
@@ -55,6 +56,11 @@ function Editor() {
     }
   };
 
+  const leaveRoom = () => {
+    socket.disconnect();
+    navigate("/");
+  };
+
   return (
     <div className="flex h-screen">
       <div className="w-56 bg-slate-900 text-white p-4 flex flex-col">
@@ -71,6 +77,13 @@ function Editor() {
           className="mt-4 w-full rounded bg-blue-600 px-3 py-2 hover:bg-blue-700 transition"
         >
           Copy Room ID
+        </button>
+
+        <button
+          onClick={leaveRoom}
+          className="mt-3 w-full rounded bg-red-600 px-3 py-2 hover:bg-red-700 transition"
+        >
+          Leave Room
         </button>
       </div>
 

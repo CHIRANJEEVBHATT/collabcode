@@ -21,6 +21,7 @@ export function useHome() {
     const id = uuid();
 
     form.setValue("roomId", id);
+
     toast.success("Room ID generated!");
   };
 
