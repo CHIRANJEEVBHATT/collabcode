@@ -18,7 +18,7 @@
 ## Login
 
 <p align="center">
-<img src="./docs/screenshots/login.png" width="900">
+<img src="collabcode\client\public\login.png" width="900">
 </p>
 
 ---
@@ -26,7 +26,7 @@
 ## Home
 
 <p align="center">
-<img src="./docs/screenshots/home.png" width="900">
+<img src="collabcode\client\public\home.png" width="900">
 </p>
 
 ---
@@ -34,7 +34,7 @@
 ## Collaborative Editor
 
 <p align="center">
-<img src="./docs/screenshots/editor.png" width="900">
+<img src="collabcode\client\public\editor.png" width="900">
 </p>
 
 ---
@@ -42,7 +42,7 @@
 ## Output Panel
 
 <p align="center">
-<img src="./docs/screenshots/output.png" width="900">
+<img src="collabcode\client\public\output.png" width="900">
 </p>
 
 ---
@@ -379,7 +379,7 @@ docs/
 screenshots/
 
     login.png
-
+        
     home.png
 
     editor.png
