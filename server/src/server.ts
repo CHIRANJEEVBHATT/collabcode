@@ -6,24 +6,31 @@ import { Server } from "socket.io";
 
 import app from "./app";
 import { registerEditorEvents } from "./sockets/editor.socket";
+import { connectDB } from "./config/database";
 
 const PORT = process.env.PORT || 5000;
 
-const httpServer = createServer(app);
+async function startServer() {
+  await connectDB();
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-  },
-});
+  const httpServer = createServer(app);
 
-io.on("connection", (socket) => {
-  console.log(`✅ ${socket.id} connected`);
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST"],
+    },
+  });
 
-  registerEditorEvents(socket);
-});
+  io.on("connection", (socket) => {
+    console.log(`✅ ${socket.id} connected`);
 
-httpServer.listen(PORT, () => {
-  console.log(`🚀 Server running on ${PORT}`);
-});
+    registerEditorEvents(socket);
+  });
+
+  httpServer.listen(PORT, () => {
+    console.log(`🚀 Server running on ${PORT}`);
+  });
+}
+
+startServer();

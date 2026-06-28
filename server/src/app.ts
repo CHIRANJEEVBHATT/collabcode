@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 
 import runRoutes from "./routes/run.routes";
+import roomRoutes from "./routes/room.routes";
+import roomHistoryRoutes from "./routes/roomHistory.routes";
 
 const app = express();
 
@@ -16,5 +18,7 @@ app.get("/health", (_, res) => {
 });
 
 app.use("/run", runRoutes);
+app.use("/rooms", roomRoutes);
+app.use("/room-history", roomHistoryRoutes);
 
 export default app;
