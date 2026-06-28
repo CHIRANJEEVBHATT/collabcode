@@ -369,25 +369,6 @@ POST /run
 
 ---
 
-# 📸 Screenshots
-
-Replace these with your own screenshots.
-
-```
-docs/
-
-screenshots/
-
-    login.png
-        
-    home.png
-
-    editor.png
-
-    output.png
-```
-
----
 
 # 💡 Why I Built This
 
