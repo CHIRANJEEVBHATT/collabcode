@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { socket } from "@/sockets/socket";
 
@@ -12,16 +13,27 @@ import OutputPanel from "./OutputPanel";
 function Editor() {
   const { roomId = "" } = useParams();
   const navigate = useNavigate();
-
   const { state } = useLocation();
+
   const username = state?.username || "Anonymous";
 
-  const [code, setCode] = useState("// Happy Coding 🚀");
+  const [code, setCode] = useState(
+    () => localStorage.getItem("collab-code") || "// Happy Coding 🚀"
+  );
+
+
+  const [theme, setTheme] = useState("vs-dark");
+  const [fontSize, setFontSize] = useState(16);
+
   const [users, setUsers] = useState<string[]>([]);
   const [connected, setConnected] = useState(false);
 
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("collab-code", code);
+  }, [code]);
 
   useEffect(() => {
     socket.connect();
@@ -61,9 +73,9 @@ function Editor() {
   const copyRoomId = async () => {
     try {
       await navigator.clipboard.writeText(roomId);
-      alert("Room ID copied!");
+      toast.success("Room ID copied");
     } catch {
-      alert("Failed to copy Room ID");
+      toast.error("Failed to copy Room ID");
     }
   };
 
@@ -96,6 +108,28 @@ function Editor() {
 
     setLoading(false);
   };
+  const clearOutput = () => {
+  setOutput("");
+};
+
+const downloadCode = () => {
+  const blob = new Blob([code], {
+    type: "text/javascript",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "code.js";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+  toast.success("Downloaded code.js");
+};
 
   return (
     <EditorLayout
@@ -103,24 +137,36 @@ function Editor() {
         <EditorNavbar
           roomId={roomId}
           connected={connected}
+          
+          theme={theme}
+          fontSize={fontSize}
+          loading={loading}
+          onDownloadCode={downloadCode}
+          
+          onThemeChange={setTheme}
+          onFontSizeChange={setFontSize}
           onCopyRoomId={copyRoomId}
           onLeaveRoom={leaveRoom}
           onRunCode={runCode}
-          loading={loading}
         />
       }
       sidebar={<UserSidebar users={users} />}
       editor={
         <CodeEditor
           code={code}
+          language="javascript"
+          theme={theme}
+          fontSize={fontSize}
           onChange={handleCodeChange}
+          onRun={runCode}
         />
       }
       output={
         <OutputPanel
-          output={output}
-          loading={loading}
-        />
+  output={output}
+  loading={loading}
+  onClear={clearOutput}
+/>
       }
     />
   );
