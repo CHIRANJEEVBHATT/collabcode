@@ -20,7 +20,7 @@ function CodeEditor({
   return (
     <Editor
       height="100%"
-      language="javascript"
+      language={language}
       theme={theme}
       value={code}
       onChange={(value) => onChange(value || "")}

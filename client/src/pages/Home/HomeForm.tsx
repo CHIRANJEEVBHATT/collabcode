@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,12 +10,6 @@ import { Code2 } from "lucide-react";
 import { createRoom, getRoom } from "@/services/api";
 
 const schema = z.object({
-  username: z
-    .string()
-    .trim()
-    .min(3, "Username must be at least 3 characters")
-    .max(20, "Username must be at most 20 characters"),
-
   roomId: z.string().trim().optional(),
 });
 
@@ -23,64 +17,49 @@ type HomeFormData = z.infer<typeof schema>;
 
 function HomeForm() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("Anonymous");
 
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
   } = useForm<HomeFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: "",
       roomId: "",
     },
   });
 
   useEffect(() => {
-    const saved = localStorage.getItem("username");
+    const saved = localStorage.getItem("user");
 
     if (saved) {
-      setValue("username", saved);
+      try {
+        const u = JSON.parse(saved);
+        setUsername(u.username || "Anonymous");
+      } catch {
+        setUsername("Anonymous");
+      }
     }
-  }, [setValue]);
-
-  const username = watch("username");
+  }, []);
 
   const handleJoinRoom = async (data: HomeFormData) => {
-  console.log("1. Form submitted:", data);
+    if (!data.roomId?.trim()) {
+      toast.error("Please enter a Room ID");
+      return;
+    }
 
-  if (!data.roomId?.trim()) {
-    toast.error("Please enter a Room ID");
-    return;
-  }
-
-  try {
-    console.log("2. Checking room...");
-
-    const room = await getRoom(data.roomId);
-
-    console.log("3. Room response:", room);
-
-    localStorage.setItem("username", data.username);
-
-    console.log("4. Navigating...");
-
-    navigate(`/editor/${data.roomId}`, {
-      state: {
-        username: data.username,
-      },
-    });
-  } catch (err) {
-    console.error("Join failed:", err);
-    toast.error(err instanceof Error ? err.message : "Failed to join room");
-  }
-};
+    try {
+      await getRoom(data.roomId);
+      navigate(`/editor/${data.roomId}`);
+    } catch (err) {
+      console.error("Join failed:", err);
+      toast.error(err instanceof Error ? err.message : "Failed to join room");
+    }
+  };
 
   const handleCreateRoom = async () => {
-    if (username.trim().length < 3) {
-      toast.error("Enter a valid username");
+    if (!username || username === "Anonymous") {
+      toast.error("You must be logged in to create a room");
       return;
     }
 
@@ -88,18 +67,10 @@ function HomeForm() {
 
     try {
       await createRoom(roomId, username);
-
-      localStorage.setItem("username", username);
-
       toast.success("Room created");
-
-      navigate(`/editor/${roomId}`, {
-        state: {
-          username,
-        },
-      });
+      navigate(`/editor/${roomId}`);
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.message || "Failed to create room");
     }
   };
 
@@ -117,29 +88,14 @@ function HomeForm() {
         </p>
       </div>
 
+      <div className="mb-4 text-left text-white">
+        <p className="text-sm text-slate-400">Logged in as</p>
+        <p className="text-lg font-semibold">{username}</p>
+      </div>
+
       <form onSubmit={handleSubmit(handleJoinRoom)} className="space-y-5">
         <div>
-          <label className="mb-2 block text-sm text-slate-300">
-            Username
-          </label>
-
-          <input
-            {...register("username")}
-            placeholder="Enter username"
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none focus:border-blue-500"
-          />
-
-          {errors.username && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.username.message}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <label className="mb-2 block text-sm text-slate-300">
-            Room ID
-          </label>
+          <label className="mb-2 block text-sm text-slate-300">Room ID</label>
 
           <input
             {...register("roomId")}

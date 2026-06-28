@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import RoomHistory from "../models/RoomHistory";
 
 const roomCode = new Map<string, string>();
 
@@ -13,7 +14,7 @@ const roomUsers = new Map<
 export const registerEditorEvents = (socket: Socket) => {
   socket.on(
     "join-room",
-    ({ roomId, username }: { roomId: string; username: string }) => {
+    async ({ roomId, username }: { roomId: string; username: string }) => {
       socket.join(roomId);
 
       console.log(`${username} joined ${roomId}`);
@@ -26,6 +27,19 @@ export const registerEditorEvents = (socket: Socket) => {
       });
 
       roomUsers.set(roomId, users);
+
+      // try to load persisted room history if server doesn't have it in memory
+      if (!roomCode.has(roomId)) {
+        try {
+          const history = await RoomHistory.findOne({ roomId });
+
+          if (history && history.latestCode) {
+            roomCode.set(roomId, history.latestCode);
+          }
+        } catch (err) {
+          console.error("Failed to load room history on join", err);
+        }
+      }
 
       socket.emit("sync-code", roomCode.get(roomId) || "// Happy Coding 🚀");
 

@@ -1,4 +1,4 @@
-type SessionState = {
+export type SessionState = {
   username: string;
   roomId: string;
   isConnected: boolean;

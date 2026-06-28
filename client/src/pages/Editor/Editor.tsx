@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -9,17 +9,24 @@ import EditorLayout from "./EditorLayout";
 import EditorNavbar from "./EditorNavbar";
 import UserSidebar from "./UserSidebar";
 import OutputPanel from "./OutputPanel";
+import { getRoomHistory, saveRoomHistory } from "@/services/api";
 
 function Editor() {
   const { roomId = "" } = useParams();
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const username = state?.username || "Anonymous";
+  let username = state?.username || "Anonymous";
+  try {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      const u = JSON.parse(stored);
+      username = username || u.username || username;
+    }
+  } catch {}
 
-  const [code, setCode] = useState(
-    () => localStorage.getItem("collab-code") || "// Happy Coding 🚀"
-  );
+  const [code, setCode] = useState("// Happy Coding 🚀");
+  const latestCodeRef = useRef(code);
 
 
   const [theme, setTheme] = useState("vs-dark");
@@ -31,35 +38,67 @@ function Editor() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem("collab-code", code);
-  }, [code]);
 
   useEffect(() => {
-    socket.connect();
+    const init = async () => {
+      try {
+        const res = (await getRoomHistory(roomId)) as { history?: { latestCode?: string } };
 
-    socket.on("connect", () => setConnected(true));
-    socket.on("disconnect", () => setConnected(false));
+        if (res.history?.latestCode) {
+          setCode(res.history.latestCode);
+          latestCodeRef.current = res.history.latestCode;
+        }
+      } catch (err) {
+        // ignore
+      }
 
-    socket.emit("join-room", {
-      roomId,
-      username,
-    });
+      try {
+        const token = localStorage.getItem("token");
 
-    socket.on("sync-code", setCode);
-    socket.on("code-update", setCode);
-    socket.on("room-users", setUsers);
+        if (token) {
+          // @ts-ignore
+          socket.auth = { token };
+        }
+      } catch {}
+
+      socket.connect();
+
+      socket.on("connect", () => setConnected(true));
+      socket.on("disconnect", () => setConnected(false));
+
+      socket.emit("join-room", { roomId, username });
+
+      socket.on("sync-code", (c: string) => {
+        setCode(c);
+        latestCodeRef.current = c;
+      });
+
+      socket.on("code-update", (c: string) => {
+        setCode(c);
+        latestCodeRef.current = c;
+      });
+
+      socket.on("room-users", setUsers);
+    };
+
+    init();
+
+    const autosave = setInterval(() => {
+      const latest = latestCodeRef.current;
+
+      saveRoomHistory(roomId, latest).catch(() => {});
+    }, 5000);
 
     return () => {
+      clearInterval(autosave);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("sync-code");
       socket.off("code-update");
       socket.off("room-users");
-
       socket.disconnect();
     };
-  }, []);
+  }, [roomId]);
 
   const handleCodeChange = (value: string) => {
     setCode(value);
@@ -79,6 +118,17 @@ function Editor() {
     }
   };
 
+  const shareRoom = async () => {
+    const inviteLink = `${window.location.origin}/editor/${roomId}`;
+
+    try {
+      await navigator.clipboard.writeText(inviteLink);
+      toast.success("Room link copied. Share it with others.");
+    } catch {
+      toast.error("Could not copy the room link");
+    }
+  };
+
   const leaveRoom = () => {
     socket.disconnect();
     navigate("/");
@@ -88,11 +138,17 @@ function Editor() {
     setLoading(true);
 
     try {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      const token = localStorage.getItem("token");
+
+      if (token) headers.Authorization = `Bearer ${token}`;
+
       const response = await fetch("http://localhost:5000/run", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           language: "javascript",
           code,
@@ -146,6 +202,7 @@ const downloadCode = () => {
           onThemeChange={setTheme}
           onFontSizeChange={setFontSize}
           onCopyRoomId={copyRoomId}
+          onShareRoom={shareRoom}
           onLeaveRoom={leaveRoom}
           onRunCode={runCode}
         />
