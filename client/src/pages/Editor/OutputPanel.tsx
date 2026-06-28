@@ -21,9 +21,9 @@ function OutputPanel({
   };
 
   return (
-    <div className="h-56 border-t border-slate-700 bg-slate-950 text-white flex flex-col">
+    <div className="h-56 border-t border-white/15 bg-black text-white flex flex-col">
 
-      <div className="flex items-center justify-between px-4 py-2 border-b border-slate-700">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-white/15">
 
         <h2 className="font-semibold">
           Output
@@ -33,14 +33,14 @@ function OutputPanel({
 
           <button
             onClick={copyOutput}
-            className="bg-blue-600 hover:bg-blue-700 rounded px-3 py-1 text-sm"
+            className="rounded border border-white/20 px-3 py-1 text-sm hover:bg-white/10"
           >
             Copy
           </button>
 
           <button
             onClick={onClear}
-            className="bg-red-600 hover:bg-red-700 rounded px-3 py-1 text-sm"
+            className="rounded bg-zinc-800 px-3 py-1 text-sm hover:bg-zinc-700"
           >
             Clear
           </button>
@@ -52,7 +52,7 @@ function OutputPanel({
       <div className="flex-1 overflow-auto p-4">
 
         {loading ? (
-          <div className="text-yellow-400">
+          <div className="text-zinc-300">
             Running JavaScript...
           </div>
         ) : (

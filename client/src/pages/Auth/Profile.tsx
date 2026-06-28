@@ -18,15 +18,15 @@ function Profile() {
     navigate("/login");
   };
 
-  if (!user) return <div className="p-4">Loading...</div>;
+  if (!user) return <div className="p-4 text-white">Loading...</div>;
 
   return (
-    <div className="p-6">
+    <div className="p-6 text-white">
       <h2 className="text-xl font-semibold mb-2">Profile</h2>
       <p>Username: {user.username}</p>
       <p>Email: {user.email}</p>
 
-      <button onClick={doLogout} className="mt-4 rounded bg-red-600 px-4 py-2">Logout</button>
+      <button onClick={doLogout} className="mt-4 rounded bg-white px-4 py-2 font-medium text-black hover:bg-zinc-200">Logout</button>
     </div>
   );
 }

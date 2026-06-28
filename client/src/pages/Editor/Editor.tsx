@@ -29,7 +29,7 @@ function Editor() {
   const latestCodeRef = useRef(code);
 
 
-  const [theme, setTheme] = useState("vs-dark");
+  const [theme, setTheme] = useState("collabcode-bw");
   const [fontSize, setFontSize] = useState(16);
 
   const [users, setUsers] = useState<string[]>([]);

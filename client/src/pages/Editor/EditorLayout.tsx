@@ -14,11 +14,11 @@ function EditorLayout({
   output,
 }: Props) {
   return (
-    <div className="flex h-[calc(100vh-5rem)] flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+    <div className="flex h-[calc(100vh-5rem)] flex-col overflow-hidden rounded-xl border border-white/15 bg-black">
       {navbar}
 
       <div className="flex flex-1 flex-col overflow-hidden lg:flex-row">
-        <div className="w-full border-b border-slate-800 lg:w-72 lg:border-b-0 lg:border-r">
+        <div className="w-full border-b border-white/15 lg:w-72 lg:border-b-0 lg:border-r">
           {sidebar}
         </div>
 

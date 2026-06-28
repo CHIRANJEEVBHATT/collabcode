@@ -75,56 +75,56 @@ function HomeForm() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
+    <div className="w-full max-w-md rounded-2xl border border-white/15 bg-zinc-950 p-8 shadow-xl shadow-black">
       <div className="mb-8 text-center">
-        <Code2 className="mx-auto mb-4 h-12 w-12 text-blue-500" />
+        <Code2 className="mx-auto mb-4 h-12 w-12 text-white" />
 
         <h1 className="text-3xl font-bold text-white">
           CollabCode
         </h1>
 
-        <p className="mt-2 text-slate-400">
+        <p className="mt-2 text-zinc-400">
           Real-Time Collaborative Code Editor
         </p>
       </div>
 
       <div className="mb-4 text-left text-white">
-        <p className="text-sm text-slate-400">Logged in as</p>
+        <p className="text-sm text-zinc-400">Logged in as</p>
         <p className="text-lg font-semibold">{username}</p>
       </div>
 
       <form onSubmit={handleSubmit(handleJoinRoom)} className="space-y-5">
         <div>
-          <label className="mb-2 block text-sm text-slate-300">Room ID</label>
+          <label className="mb-2 block text-sm text-zinc-300">Room ID</label>
 
           <input
             {...register("roomId")}
             placeholder="Enter Room ID"
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-white/15 bg-black px-4 py-3 text-white placeholder:text-zinc-500 outline-none focus:border-white"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
+          className="w-full rounded-lg bg-white py-3 font-semibold text-black hover:bg-zinc-200"
         >
           Join Room
         </button>
       </form>
 
       <div className="my-6 flex items-center">
-        <div className="h-px flex-1 bg-slate-700" />
+        <div className="h-px flex-1 bg-white/15" />
 
-        <span className="mx-3 text-sm text-slate-400">
+        <span className="mx-3 text-sm text-zinc-400">
           OR
         </span>
 
-        <div className="h-px flex-1 bg-slate-700" />
+        <div className="h-px flex-1 bg-white/15" />
       </div>
 
       <button
         onClick={handleCreateRoom}
-        className="w-full rounded-lg border border-slate-700 py-3 text-white hover:bg-slate-800"
+        className="w-full rounded-lg border border-white/20 py-3 text-white hover:bg-white/10"
       >
         Create New Room
       </button>
