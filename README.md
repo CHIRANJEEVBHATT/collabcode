@@ -1,125 +1,192 @@
-# CollabCode
+# 🚀 CollabCode
 
-CollabCode is a modern real-time collaborative code editor designed for pair programming, interviews, coding sessions, and team-based development. It combines a polished React frontend with a Node.js backend to deliver instant code synchronization, room-based collaboration, authentication, and code execution in a seamless experience.
+> A production-ready real-time collaborative JavaScript code editor built with React, TypeScript, Node.js, Socket.IO, MongoDB, and Monaco Editor.
 
-## Overview
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)]()
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)]()
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js)]()
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socket.io)]()
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb)]()
+[![License](https://img.shields.io/badge/License-ISC-blue)]()
 
-CollabCode empowers users to:
-- Create or join collaborative coding rooms instantly
-- Edit code in real time with other participants
-- Run JavaScript code from the editor
-- Save room history and recover previous work
-- Authenticate securely with JWT-based login
-- Share room links for fast collaboration
+---
 
-## Key Features
+# 📸 Project Preview
 
-- Real-time code synchronization using Socket.IO
-- Secure authentication with JWT and bcrypt
-- Room-based collaboration with unique room IDs
-- Monaco-powered editor experience
-- Live user presence in each room
-- Room history persistence and autosave
-- Responsive and modern UI built with React and Tailwind CSS
-- Code execution support for JavaScript
+> **Replace the placeholders below with screenshots or GIFs of your application.**
 
-## Tech Stack
+## Login
 
-### Frontend
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS
-- Monaco Editor
-- Socket.IO Client
-- React Router
-- Zustand
+<p align="center">
+<img src="./docs/screenshots/login.png" width="900">
+</p>
 
-### Backend
-- Node.js
-- Express
-- TypeScript
-- Socket.IO
-- MongoDB with Mongoose
-- JWT Authentication
-- bcryptjs
+---
 
-## Architecture
+## Home
 
-The project is organized into two main parts:
-- Client: React application for the user interface and editor experience
-- Server: Express + Socket.IO backend for authentication, room management, persistence, and code execution
+<p align="center">
+<img src="./docs/screenshots/home.png" width="900">
+</p>
 
-The application follows a modular structure with clear separation between:
-- UI and routing
-- Auth and session management
-- Real-time collaboration
-- Database persistence
+---
 
-## Prerequisites
+## Collaborative Editor
 
-Before running the project locally, make sure you have:
-- Node.js 18+ installed
-- npm or yarn installed
-- MongoDB running locally or a reachable MongoDB Atlas instance
+<p align="center">
+<img src="./docs/screenshots/editor.png" width="900">
+</p>
 
-## Environment Configuration
+---
 
-Create a .env file inside the server directory with the following values:
+## Output Panel
 
-```env
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/collabcode
-JWT_SECRET=your_super_secret_key
+<p align="center">
+<img src="./docs/screenshots/output.png" width="900">
+</p>
+
+---
+
+# ✨ Overview
+
+CollabCode is a full-stack collaborative JavaScript editor that enables multiple users to write and execute code together in real time.
+
+It is designed to simulate the collaborative editing experience of platforms like Google Docs and Replit while demonstrating modern full-stack development practices including authentication, real-time communication, database persistence, and cloud-ready architecture.
+
+---
+
+# ✨ Features
+
+## 👨‍💻 Collaboration
+
+* Real-time collaborative editing
+* Room-based collaboration
+* Live online users
+* Share room link
+* Copy room ID
+* Join existing rooms
+* Create new rooms
+* Automatic code synchronization
+* Code synchronization for newly joined users
+
+---
+
+## 🎨 Editor
+
+* Monaco Editor (VS Code editor)
+* JavaScript syntax highlighting
+* Dark theme
+* Theme selector
+* Font size selector
+* Responsive layout
+* Auto-save
+* Download current code
+* Copy output
+* Clear output
+
+---
+
+## ⚙️ Code Execution
+
+* JavaScript execution
+* Output panel
+* Ctrl + Enter shortcut
+* Error handling
+* Execution feedback
+
+---
+
+## 🔐 Authentication
+
+* User registration
+* User login
+* JWT authentication
+* Protected routes
+* Secure password hashing (bcrypt)
+* Logout
+
+---
+
+## 💾 Persistence
+
+* MongoDB database
+* User management
+* Room management
+* Room history
+* Saved editor state
+
+---
+
+# 🏗 Tech Stack
+
+## Frontend
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router
+* React Hook Form
+* Zod
+* Monaco Editor
+* Socket.IO Client
+* Zustand
+* React Hot Toast
+
+---
+
+## Backend
+
+* Node.js
+* Express
+* TypeScript
+* Socket.IO
+* MongoDB
+* Mongoose
+* JWT
+* bcryptjs
+
+---
+
+## Tools
+
+* Git
+* GitHub
+* npm
+
+---
+
+# 🏛 Architecture
+
+```text
+                        Browser
+                           │
+                 React + TypeScript
+                           │
+          ┌────────────────┴───────────────┐
+          │                                │
+     Monaco Editor                 Socket.IO Client
+          │                                │
+          └────────────────┬───────────────┘
+                           │
+                     Express Server
+                           │
+         ┌─────────────────┴─────────────────┐
+         │                                   │
+    Socket.IO                         REST API
+         │                                   │
+         └─────────────────┬─────────────────┘
+                           │
+                       MongoDB
 ```
 
-Replace the values with your own secure configuration.
+---
 
-## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/CHIRANJEEVBHATT/collabcode.git
-cd collabcode
-```
-
-### 2. Install dependencies
-
-```bash
-cd client
-npm install
-```
-
-```bash
-cd ../server
-npm install
-```
-
-## Running the Application
-
-### Start the backend
-
-```bash
-cd server
-npm run dev
-```
-
-The server will start on http://localhost:5000.
-
-### Start the frontend
-
-```bash
-cd client
-npm run dev
-```
-
-The client will be available at http://localhost:5173.
-
-## Project Structure
+# 📂 Project Structure
 
 ```text
 collabcode/
+
 ├── client/
 │   ├── src/
 │   │   ├── components/
@@ -127,54 +194,230 @@ collabcode/
 │   │   ├── routes/
 │   │   ├── services/
 │   │   ├── sockets/
-│   │   └── store/
+│   │   ├── store/
+│   │   └── utils/
 │   └── package.json
+│
 ├── server/
 │   ├── src/
+│   │   ├── config/
 │   │   ├── controllers/
+│   │   ├── middleware/
 │   │   ├── models/
 │   │   ├── routes/
+│   │   ├── services/
 │   │   ├── sockets/
 │   │   └── utils/
 │   └── package.json
-└── docs/
+│
+├── docs/
+├── README.md
+└── docker-compose.yml
 ```
 
-## API Highlights
+---
 
-The backend exposes endpoints for:
-- Authentication
-  - POST /auth/register
-  - POST /auth/login
-  - GET /auth/me
-- Rooms
-  - POST /rooms
-  - GET /rooms/:roomId
-- Room history
-  - POST /room-history/:roomId
-  - GET /room-history/:roomId
-- Code execution
-  - POST /run
+# 🚀 Getting Started
 
-## Development Notes
+## Clone Repository
 
-- The frontend uses Vite for fast development and optimized production builds.
-- The backend uses TypeScript for maintainability and stronger code quality.
-- Socket.IO is used for low-latency collaboration across connected clients.
-- MongoDB stores usernames, hashed passwords, and room-related data.
+```bash
+git clone https://github.com/CHIRANJEEVBHATT/collabcode.git
 
-## Contributing
+cd collabcode
+```
 
-Contributions are welcome. If you would like to improve CollabCode, please follow these steps:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request with a clear description
+---
 
-## License
+## Install Dependencies
 
-This project is licensed under the ISC License.
+### Client
 
-## Contact
+```bash
+cd client
 
-For questions or collaboration opportunities, please reach out through the project repository.
+npm install
+```
+
+### Server
+
+```bash
+cd ../server
+
+npm install
+```
+
+---
+
+# ⚙ Environment Variables
+
+Create `server/.env`
+
+```env
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
+```
+
+---
+
+# ▶ Running Locally
+
+### Start Backend
+
+```bash
+cd server
+
+npm run dev
+```
+
+---
+
+### Start Frontend
+
+```bash
+cd client
+
+npm run dev
+```
+
+Frontend
+
+```
+http://localhost:5173
+```
+
+Backend
+
+```
+http://localhost:5000
+```
+
+---
+
+# 📡 API Overview
+
+## Authentication
+
+```
+POST /auth/register
+
+POST /auth/login
+
+GET /auth/me
+```
+
+---
+
+## Rooms
+
+```
+POST /rooms
+
+GET /rooms/:roomId
+```
+
+---
+
+## Room History
+
+```
+POST /room-history/:roomId
+
+GET /room-history/:roomId
+```
+
+---
+
+## Code Execution
+
+```
+POST /run
+```
+
+---
+
+# 📋 Roadmap
+
+## ✅ Completed
+
+* Authentication
+* JWT
+* MongoDB
+* Room Management
+* Real-time Collaboration
+* Monaco Editor
+* Online Users
+* Share Room
+* Responsive Editor
+* JavaScript Execution
+* Output Panel
+
+---
+
+## 🚧 Planned
+
+* Docker Containerization
+* Docker Compose
+* AWS Deployment
+* Nginx Reverse Proxy
+* HTTPS (Let's Encrypt)
+* CI/CD Pipeline
+* Redis Pub/Sub (Future)
+
+---
+
+# 📸 Screenshots
+
+Replace these with your own screenshots.
+
+```
+docs/
+
+screenshots/
+
+    login.png
+
+    home.png
+
+    editor.png
+
+    output.png
+```
+
+---
+
+# 💡 Why I Built This
+
+I built CollabCode to explore real-time collaborative systems and strengthen my full-stack engineering skills. The project focuses on WebSocket communication, authentication, database persistence, and a modern code editing experience inspired by collaborative development tools.
+
+---
+
+# 🤝 Contributing
+
+Contributions, suggestions, and improvements are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Open a Pull Request.
+
+---
+
+# 📄 License
+
+Licensed under the ISC License.
+
+---
+
+# 👨‍💻 Author
+
+**Chiranjeev Bhatt**
+
+GitHub: https://github.com/CHIRANJEEVBHATT
+
+---
+
+⭐ If you found this project interesting, consider giving it a star.
