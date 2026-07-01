@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: ./server
+
+    container_name: collabcode-server
+
+    env_file:
+      - ./server/.env
+
+    restart: unless-stopped
+
+    expose:
+      - "5000"
+
+    networks:
+      - collabcode-network
+
+  client:
+    build:
+      context: ./client
+
+    container_name: collabcode-client
+
+    restart: unless-stopped
+
+    networks:
+      - collabcode-network
+
+  nginx:
+    build:
+      context: ./nginx
+
+    container_name: collabcode-nginx
+
+    restart: unless-stopped
+
+    depends_on:
+      - server
+      - client
+
+    ports:
+      - "80:80"
+
+    networks:
+      - collabcode-network
+
+networks:
+  collabcode-network:
+    driver: bridge

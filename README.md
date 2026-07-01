@@ -11,7 +11,7 @@
 
 ---
 
-# 📸 Project Preview
+# Project Preview
 
 > **Replace the placeholders below with screenshots or GIFs of your application.**
 
@@ -47,7 +47,7 @@
 
 ---
 
-# ✨ Overview
+# Overview
 
 CollabCode is a full-stack collaborative JavaScript editor that enables multiple users to write and execute code together in real time.
 
@@ -55,9 +55,9 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-# ✨ Features
+# Features
 
-## 👨‍💻 Collaboration
+## Collaboration
 
 * Real-time collaborative editing
 * Room-based collaboration
@@ -71,7 +71,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-## 🎨 Editor
+##  Editor
 
 * Monaco Editor (VS Code editor)
 * JavaScript syntax highlighting
@@ -86,7 +86,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-## ⚙️ Code Execution
+##  Code Execution
 
 * JavaScript execution
 * Output panel
@@ -96,7 +96,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-## 🔐 Authentication
+##  Authentication
 
 * User registration
 * User login
@@ -107,7 +107,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-## 💾 Persistence
+##  Persistence
 
 * MongoDB database
 * User management
@@ -117,7 +117,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-# 🏗 Tech Stack
+#  Tech Stack
 
 ## Frontend
 
@@ -156,7 +156,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-# 🏛 Architecture
+#  Architecture
 
 ```text
                         Browser
@@ -182,7 +182,7 @@ It is designed to simulate the collaborative editing experience of platforms lik
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```text
 collabcode/
@@ -217,7 +217,7 @@ collabcode/
 
 ---
 
-# 🚀 Getting Started
+#  Getting Started
 
 ## Clone Repository
 
@@ -249,7 +249,7 @@ npm install
 
 ---
 
-# ⚙ Environment Variables
+#  Environment Variables
 
 Create `server/.env`
 
@@ -263,7 +263,7 @@ JWT_SECRET=your_secret_key
 
 ---
 
-# ▶ Running Locally
+#  Running Locally
 
 ### Start Backend
 
@@ -297,7 +297,7 @@ http://localhost:5000
 
 ---
 
-# 📡 API Overview
+#  API Overview
 
 ## Authentication
 
@@ -339,9 +339,9 @@ POST /run
 
 ---
 
-# 📋 Roadmap
+#  Roadmap
 
-## ✅ Completed
+##  Completed
 
 * Authentication
 * JWT
@@ -357,7 +357,7 @@ POST /run
 
 ---
 
-## 🚧 Planned
+##  Planned
 
 * Docker Containerization
 * Docker Compose
@@ -370,13 +370,13 @@ POST /run
 ---
 
 
-# 💡 Why I Built This
+#  Why I Built This
 
 I built CollabCode to explore real-time collaborative systems and strengthen my full-stack engineering skills. The project focuses on WebSocket communication, authentication, database persistence, and a modern code editing experience inspired by collaborative development tools.
 
 ---
 
-# 🤝 Contributing
+#  Contributing
 
 Contributions, suggestions, and improvements are welcome.
 
@@ -387,13 +387,13 @@ Contributions, suggestions, and improvements are welcome.
 
 ---
 
-# 📄 License
+#  License
 
 Licensed under the ISC License.
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 **Chiranjeev Bhatt**
 
@@ -401,4 +401,4 @@ GitHub: https://github.com/CHIRANJEEVBHATT
 
 ---
 
-⭐ If you found this project interesting, consider giving it a star.
+ If you found this project interesting, consider giving it a star.
